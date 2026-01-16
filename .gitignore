@@ -1,6 +1,10 @@
+
 __pycache__/
-*.keras
-data/
-*.csv
+# *.keras  <-- Commented out to allow pushing the model
+# data/    <-- Commented out, but usually we exclude data. 
+# Let's be specific: Exclude csv, include json.
+
+data/*.csv
 .env
 .DS_Store
+
