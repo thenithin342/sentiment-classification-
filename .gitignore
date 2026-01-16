@@ -1,0 +1,6 @@
+__pycache__/
+*.keras
+data/
+*.csv
+.env
+.DS_Store
