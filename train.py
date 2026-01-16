@@ -12,11 +12,18 @@ def main():
     parser.add_argument('--batch_size', type=int, default=32, help='Batch size')
     parser.add_argument('--vocab_size', type=int, default=10000, help='Max vocabulary size')
     parser.add_argument('--max_len', type=int, default=300, help='Max sequence length')
+    parser.add_argument('--model_type', type=str, default='lstm', choices=['lstm', 'gru', 'bidirectional'], help='Model type to train')
+    parser.add_argument('--limit', type=int, default=None, help='Limit dataset size for testing')
     args = parser.parse_args()
 
     # Load data
     print(f"Loading data from {args.data_dir}...")
     train_df, test_df = load_data(args.data_dir)
+    
+    if args.limit:
+        print(f"Limiting data to {args.limit} samples...")
+        train_df = train_df.head(args.limit)
+        test_df = test_df.head(args.limit)
 
     # Build vocab
     print("Building vocabulary...")
@@ -55,7 +62,7 @@ def main():
     # So max index used is len(word2idx)-1.
     # Embedding input_dim should be len(word2idx)
     
-    model = get_model(vocab_size=len(word2idx), max_len=args.max_len)
+    model = get_model(vocab_size=len(word2idx), max_len=args.max_len, model_type=args.model_type)
     
     model.compile(optimizer='adam',
 
